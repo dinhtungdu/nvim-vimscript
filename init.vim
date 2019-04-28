@@ -4,6 +4,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'scrooloose/nerdtree'
 Plug 'ryanoasis/vim-devicons'
 Plug 'vwxyutarooo/nerdtree-devicons-syntax'
+Plug 'itchyny/lightline.vim'
 " Git integration
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
@@ -40,6 +41,16 @@ set ruler
 set wildmenu
 set mouse-=a
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+set relativenumber
+
+" Clipboard setting
+set clipboard^=unnamed,unnamedplus
+
+" Persistent undo
+set undofile
+set undodir=$HOME/.local/share/nvim/undo
+set undolevels=1000
+set undoreload=10000
 
 " Code folding
 set foldmethod=manual
@@ -96,6 +107,11 @@ let NERDTreeQuitOnOpen=1
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 
+" Neomake config
+" Full config: when writing or reading a buffer, and on changes in insert and
+" normal mode (after 1s; no delay when writing).
+call neomake#configure#automake('nrwi', 500)
+
 " " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 map <F6> vip:EasyAlign *,<CR>
@@ -144,6 +160,21 @@ let g:easy_align_delimiters = {
 \     'right_margin': 1
 \   }
 \ }
+
+" Lightline config
+let g:lightline = {
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head'
+      \ },
+      \ }
+
+" make Vim figure out the Node's module loading rules 
+set suffixesadd+=.js " Import js file without extension.
+set path+=$PWD/node_modules
 
 " Completion
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
