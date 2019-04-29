@@ -9,7 +9,6 @@ Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 " Linting
-Plug 'neomake/neomake'
 Plug 'w0rp/ale'
 " PHP-specific integration
 Plug 'phpactor/phpactor' ,  {'do': 'composer install', 'for': 'php'}
@@ -20,6 +19,8 @@ Plug 'phpactor/ncm2-phpactor'
 Plug 'junegunn/vim-easy-align'
 " Syntax
 Plug 'sheerun/vim-polyglot'
+" Comment
+Plug 'scrooloose/nerdcommenter'
 " Search
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
@@ -29,6 +30,7 @@ Plug 'dinhtungdu/ayu-vim'
 call plug#end()
 
 " General
+let mapleader=","
 syntax enable
 " set t_Co=256
 set termguicolors
@@ -68,11 +70,12 @@ vnoremap // y/<C-R>"<CR>
 vnoremap <F3> y/<C-r>"<CR>
 vnoremap <F4> y:%s/<C-r>"//g<Left><Left>
 nmap <Leader>f :Files<CR>
-nmap <Leader>F :GFiles<CR>
+nmap <Leader>F :Ag<CR>
 nmap <Leader>b :Buffers<CR>
 nmap <Leader>h :History<CR>
+" Augmenting Ag command using fzf#vim#with_preview function
 command! -bang -nargs=* Ag
-  \ call fzf#vim#ag(<q-args>,
+  \ call fzf#vim#ag(<q-args>, '--hidden --ignore .git -g ""',
   \                 <bang>0 ? fzf#vim#with_preview('up:60%')
   \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
   \                 <bang>0)
@@ -94,10 +97,10 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
 " resize panes
-nnoremap <silent> <Right> :vertical resize +5<cr>
-nnoremap <silent> <Left> :vertical resize -5<cr>
-nnoremap <silent> <UP> :resize +5<cr>
-nnoremap <silent> <Down> :resize -5<cr>
+nnoremap <silent> <Right> :vertical resize +1<cr>
+nnoremap <silent> <Left> :vertical resize -1<cr>
+nnoremap <silent> <UP> :resize +1<cr>
+nnoremap <silent> <Down> :resize -1<cr>
 
 " NERDTree
 map <CR> :NERDTreeFind<CR>
@@ -107,10 +110,11 @@ let NERDTreeQuitOnOpen=1
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 
-" Neomake config
-" Full config: when writing or reading a buffer, and on changes in insert and
-" normal mode (after 1s; no delay when writing).
-call neomake#configure#automake('nrwi', 500)
+" Linting
+let g:ale_php_phpcs_standard = "WordPress"
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
+nmap <silent> <C-l> <Plug>(ale_detail)
 
 " " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
@@ -188,11 +192,11 @@ set completeopt=noinsert,menuone,noselect
 " Include use statement
 nmap <Leader>u :call phpactor#UseAdd()<CR>
 " Invoke the context menu
-nmap <Leader>mm :call phpactor#ContextMenu()<CR>
+nmap <Leader>m :call phpactor#ContextMenu()<CR>
 " Invoke the navigation menu
 nmap <Leader>nn :call phpactor#Navigate()<CR>
 " Goto definition of class or class member under the cursor
-nmap <Leader>o :call phpactor#GotoDefinition()<CR>
+nmap <Leader>g :call phpactor#GotoDefinition()<CR>
 " Transform the classes in the current file
 nmap <Leader>tt :call phpactor#Transform()<CR>
 " Generate a new class (replacing the current file)
