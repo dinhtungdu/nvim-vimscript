@@ -19,6 +19,7 @@ Plug 'phpactor/ncm2-phpactor'
 Plug 'junegunn/vim-easy-align'
 " Syntax
 Plug 'sheerun/vim-polyglot'
+"Plug 'Raimondi/delimitMate'
 " Comment
 Plug 'scrooloose/nerdcommenter'
 " Search
@@ -57,15 +58,29 @@ set undoreload=10000
 " Code folding
 set foldmethod=manual
 
+" Auto close brackets
+inoremap " ""<left>
+inoremap ' ''<left>
+inoremap ( ()<left>
+inoremap [ []<left>
+inoremap { {}<left>
+inoremap {<CR> {<CR>}<ESC>O
+inoremap {;<CR> {<CR>};<ESC>O
+
 " Tabs and spacing
 set autoindent
 set cindent
 set tabstop=2
-set expandtab
+set noexpandtab
 set shiftwidth=2
 set smarttab
 
 " Search and replace
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+set diffopt +=iwhite
 vnoremap // y/<C-R>"<CR>
 vnoremap <F3> y/<C-r>"<CR>
 vnoremap <F4> y:%s/<C-r>"//g<Left><Left>
@@ -79,6 +94,9 @@ command! -bang -nargs=* Ag
   \                 <bang>0 ? fzf#vim#with_preview('up:60%')
   \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
   \                 <bang>0)
+
+" Raw ag to passing arguments
+command! -bang -nargs=+ -complete=dir Rag call fzf#vim#ag_raw(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
 
 " Auto save
 "reload when entering the buffer or gaining focus
