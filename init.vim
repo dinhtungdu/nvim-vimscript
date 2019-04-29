@@ -9,7 +9,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 " Linting
-Plug 'w0rp/ale'
+Plug 'w0rp/ale', { 'on':  'ALEToggle' } 
 " PHP-specific integration
 Plug 'phpactor/phpactor' ,  {'do': 'composer install', 'for': 'php'}
 Plug 'ncm2/ncm2'
@@ -75,7 +75,7 @@ nmap <Leader>b :Buffers<CR>
 nmap <Leader>h :History<CR>
 " Augmenting Ag command using fzf#vim#with_preview function
 command! -bang -nargs=* Ag
-  \ call fzf#vim#ag(<q-args>, '--hidden --ignore .git -g ""',
+  \ call fzf#vim#ag(<q-args>, '--hidden --ignore .git',
   \                 <bang>0 ? fzf#vim#with_preview('up:60%')
   \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
   \                 <bang>0)
@@ -112,9 +112,6 @@ xmap ga <Plug>(EasyAlign)
 
 " Linting
 let g:ale_php_phpcs_standard = "WordPress"
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
-nmap <silent> <C-l> <Plug>(ale_detail)
 
 " " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
