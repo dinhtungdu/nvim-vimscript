@@ -17,6 +17,8 @@ Plug 'roxma/nvim-yarp'
 Plug 'phpactor/ncm2-phpactor'
 " Alignment
 Plug 'junegunn/vim-easy-align'
+" Completion
+Plug 'ervandew/supertab'
 " Syntax
 Plug 'sheerun/vim-polyglot'
 "Plug 'Raimondi/delimitMate'
@@ -127,6 +129,9 @@ let NERDTreeQuitOnOpen=1
 " Alignment
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
+
+" Completeion
+let g:SuperTabDefaultCompletionType = "<c-n>"
 
 " Linting
 let g:ale_php_phpcs_standard = "WordPress"
