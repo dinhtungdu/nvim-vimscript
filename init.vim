@@ -5,6 +5,8 @@ Plug 'scrooloose/nerdtree'
 Plug 'ryanoasis/vim-devicons'
 Plug 'vwxyutarooo/nerdtree-devicons-syntax'
 Plug 'itchyny/lightline.vim'
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-shell'
 " Git integration
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
@@ -98,7 +100,7 @@ command! -bang -nargs=* Ag
   \                 <bang>0)
 
 " Raw ag to passing arguments
-command! -bang -nargs=+ -complete=dir Rag call fzf#vim#ag_raw(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
+command! -bang -nargs=+ -complete=dir Rag call fzf#vim#ag_raw(<q-args>, fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}), <bang>0)
 
 " Auto save
 "reload when entering the buffer or gaining focus
@@ -227,3 +229,6 @@ nmap <silent><Leader>ee :call phpactor#ExtractExpression(v:false)<CR>
 vmap <silent><Leader>ee :<C-U>call phpactor#ExtractExpression(v:true)<CR>
 " Extract method from selection
 vmap <silent><Leader>em :<C-U>call phpactor#ExtractMethod()<CR>
+
+" Do a google search
+vnoremap <F5> y<Esc>:Open http://google.com/search?q=<C-r>"<CR>
