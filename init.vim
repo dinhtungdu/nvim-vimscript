@@ -50,6 +50,9 @@ set mouse-=a
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set relativenumber
 
+" Save cursor position
+autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif 
+
 " Clipboard setting
 set clipboard^=unnamed,unnamedplus
 
@@ -61,15 +64,6 @@ set undoreload=10000
 
 " Code folding
 set foldmethod=manual
-
-" Auto close brackets
-inoremap " ""<left>
-inoremap ' ''<left>
-inoremap ( ()<left>
-inoremap [ []<left>
-inoremap { {}<left>
-inoremap {<CR> {<CR>}<ESC>O
-inoremap {;<CR> {<CR>};<ESC>O
 
 " Tabs and spacing
 set autoindent
@@ -119,10 +113,10 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
 " resize panes
-nnoremap <silent> <Right> :vertical resize +1<cr>
-nnoremap <silent> <Left> :vertical resize -1<cr>
-nnoremap <silent> <UP> :resize +1<cr>
-nnoremap <silent> <Down> :resize -1<cr>
+nnoremap <silent> <Right> :vertical resize +3<cr>
+nnoremap <silent> <Left> :vertical resize -3<cr>
+nnoremap <silent> <UP> :resize +3<cr>
+nnoremap <silent> <Down> :resize -3<cr>
 
 " NERDTree
 map <CR> :NERDTreeFind<CR>
