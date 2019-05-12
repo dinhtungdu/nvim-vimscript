@@ -49,6 +49,7 @@ set wildmenu
 set mouse-=a
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set relativenumber
+nmap <Leader>t :tabNext<CR>
 
 " Save cursor position
 autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif 
@@ -83,7 +84,7 @@ vnoremap // y/<C-R>"<CR>
 vnoremap <F3> y/<C-r>"<CR>
 vnoremap <F4> y:%s/<C-r>"//g<Left><Left>
 nmap <Leader>f :Files<CR>
-nmap <Leader>F :Ag<CR>
+nmap <Leader>F :GFiles<CR>
 nmap <Leader>b :Buffers<CR>
 nmap <Leader>h :History<CR>
 " Augmenting Ag command using fzf#vim#with_preview function
