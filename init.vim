@@ -12,11 +12,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 " Linting
 Plug 'w0rp/ale', { 'on':  'ALEToggle' } 
-" PHP-specific integration
-Plug 'phpactor/phpactor' ,  {'do': 'composer install', 'for': 'php'}
-Plug 'ncm2/ncm2'
-Plug 'roxma/nvim-yarp'
-Plug 'phpactor/ncm2-phpactor'
 " Alignment
 Plug 'junegunn/vim-easy-align'
 " Completion
@@ -196,34 +191,6 @@ let g:lightline = {
 " make Vim figure out the Node's module loading rules 
 set suffixesadd+=.js " Import js file without extension.
 set path+=$PWD/node_modules
-
-" Completion
-autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
-set ofu=syntaxcomplete#Complete
-autocmd FileType php setlocal omnifunc=phpactor#Complete
-let g:phpactorOmniError = v:true
-autocmd BufEnter * call ncm2#enable_for_buffer()
-set completeopt=noinsert,menuone,noselect
-
-" PHPActor config
-" Include use statement
-nmap <Leader>u :call phpactor#UseAdd()<CR>
-" Invoke the context menu
-nmap <Leader>m :call phpactor#ContextMenu()<CR>
-" Invoke the navigation menu
-nmap <Leader>nn :call phpactor#Navigate()<CR>
-" Goto definition of class or class member under the cursor
-nmap <Leader>g :call phpactor#GotoDefinition()<CR>
-" Transform the classes in the current file
-nmap <Leader>tt :call phpactor#Transform()<CR>
-" Generate a new class (replacing the current file)
-nmap <Leader>cc :call phpactor#ClassNew()<CR>
-" Extract expression (normal mode)
-nmap <silent><Leader>ee :call phpactor#ExtractExpression(v:false)<CR>
-" Extract expression from selection
-vmap <silent><Leader>ee :<C-U>call phpactor#ExtractExpression(v:true)<CR>
-" Extract method from selection
-vmap <silent><Leader>em :<C-U>call phpactor#ExtractMethod()<CR>
 
 " Do a google search
 vnoremap <F5> y<Esc>:Open http://google.com/search?q=<C-r>"<CR>
