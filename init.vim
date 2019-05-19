@@ -75,6 +75,8 @@ set incsearch
 set ignorecase
 set smartcase
 set diffopt +=iwhite
+nnoremap <F3> yiw/<C-r>"<CR>
+nnoremap <F4> yiw:%s/<C-r>"//g<Left><Left>
 vnoremap // y/<C-R>"<CR>
 vnoremap <F3> y/<C-r>"<CR>
 vnoremap <F4> y:%s/<C-r>"//g<Left><Left>
@@ -195,6 +197,8 @@ set shortmess+=c
 " always show signcolumns
 set signcolumn=yes
 
+set completeopt+=preview
+
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 inoremap <silent><expr> <TAB>
@@ -233,10 +237,12 @@ function! s:show_documentation()
 endfunction
 
 " Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
+"autocmd CursorHold * silent call CocActionAsync('highlight')
 
 augroup mygroup
   autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
   " Update signature help on jump placeholder
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
