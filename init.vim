@@ -22,7 +22,7 @@ Plug 'sheerun/vim-polyglot'
 " Comment
 Plug 'scrooloose/nerdcommenter'
 " Search
-Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 " Themes
 Plug 'dinhtungdu/ayu-vim'
