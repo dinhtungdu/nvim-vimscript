@@ -43,6 +43,7 @@ set mouse-=a
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set relativenumber
 nmap <Leader>t :tabNext<CR>
+set guicursor=
 
 " Save cursor position
 autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif 
@@ -184,7 +185,7 @@ set nobackup
 set nowritebackup
 
 " Better display for messages
-set cmdheight=2
+"set cmdheight=2
 
 " Smaller updatetime for CursorHold & CursorHoldI
 set updatetime=300
@@ -249,6 +250,12 @@ function! CocCurrentFunction()
     return get(b:, 'coc_current_function', '')
 endfunction
 
+" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
+
+" Use `:Fold` to fold current buffer
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
 " Coc config ends ==================
 
 " Lightline config
@@ -269,3 +276,6 @@ set path+=$PWD/node_modules
 
 " Do a google search
 vnoremap <F5> y<Esc>:Open http://google.com/search?q=<C-r>"<CR>
+
+" Large file support
+autocmd BufWinEnter * if line2byte(line("$") + 1) > 1000000 | syntax clear | endif
