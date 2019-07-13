@@ -8,6 +8,7 @@ Plug 'xolox/vim-shell'
 " Git integration
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+Plug 'zivyangll/git-blame.vim'
 " Linting
 Plug 'w0rp/ale', { 'on':  'ALEToggle' } 
 " Alignment
@@ -24,6 +25,8 @@ Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 " Themes
 Plug 'dinhtungdu/ayu-vim'
+" Debugging
+Plug 'vim-vdebug/vdebug'
 " Initialize plugin system
 call plug#end()
 
@@ -163,7 +166,8 @@ set nobackup
 set nowritebackup
 
 " Better display for messages
-"set cmdheight=2
+set cmdheight=2
+set shortmess=aFc
 
 " Smaller updatetime for CursorHold & CursorHoldI
 set updatetime=300
@@ -253,7 +257,29 @@ set suffixesadd+=.js " Import js file without extension.
 set path+=$PWD/node_modules
 
 " Do a google search
-vnoremap <F5> y<Esc>:Open http://google.com/search?q=<C-r>"<CR>
+vnoremap <Leader>g y<Esc>:Open http://google.com/search?q=<C-r>"<CR>
+
+" Echo Git blame information
+nnoremap <Leader>s :<C-u>call gitblame#echo()<CR>
 
 " Large file support
 autocmd BufWinEnter * if line2byte(line("$") + 1) > 1000000 | syntax clear | endif
+
+" Debugging config
+let g:vdebug_options= {
+\    "port" : 9000,
+\    "server" : '',
+\    "timeout" : 20,
+\    "on_close" : 'detach',
+\    "break_on_open" : 0,
+\    "ide_key" : '',
+\    "path_maps" : {
+\    },
+\    "debug_window_level" : 0,
+\    "debug_file_level" : 0,
+\    "debug_file" : "",
+\    "watch_window_style" : 'compact',
+\    "marker_default"     : '⬦',
+\    "marker_closed_tree" : '▸',
+\    "marker_open_tree" : '▾'
+\}
