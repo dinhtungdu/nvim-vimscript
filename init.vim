@@ -272,7 +272,6 @@ nnoremap <Leader>s :<C-u>call gitblame#echo()<CR>
 " Large file support
 autocmd BufWinEnter * if line2byte(line("$") + 1) > 1000000 | syntax clear | endif
 
-<<<<<<< HEAD
 " Debugging config
 let g:vdebug_options= {
 \    "port" : 9000,
@@ -291,7 +290,6 @@ let g:vdebug_options= {
 \    "marker_closed_tree" : '▸',
 \    "marker_open_tree" : '▾'
 \}
-=======
 if &diff
 	autocmd FileType * let b:coc_enabled = 0
 endif
@@ -299,4 +297,3 @@ endif
 let g:vdebug_options = {'break_on_open': 0}
 
 let g:gitgutter_max_signs = 500
->>>>>>> 4adeb193d77060666803452f9010637a83c5620d
