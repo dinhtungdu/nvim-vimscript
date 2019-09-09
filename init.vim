@@ -5,8 +5,9 @@ Plug 'scrooloose/nerdtree'
 Plug 'itchyny/lightline.vim'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-shell'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'sjl/vitality.vim'
 " Git integration
-Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'zivyangll/git-blame.vim'
 " Linting
@@ -14,7 +15,7 @@ Plug 'w0rp/ale', { 'on':  'ALEToggle' }
 " Alignment
 Plug 'junegunn/vim-easy-align'
 " Completion
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
+Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 " Syntax
 Plug 'sheerun/vim-polyglot'
 "Plug 'Raimondi/delimitMate'
@@ -25,7 +26,7 @@ Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 " Themes
 Plug 'dinhtungdu/ayu-vim'
-" Debugging
+" Debug
 Plug 'vim-vdebug/vdebug'
 " Initialize plugin system
 call plug#end()
@@ -47,6 +48,19 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set relativenumber
 nmap <Leader>t :tabNext<CR>
 set guicursor=
+highlight ColorColumn ctermbg=gray
+set colorcolumn=81
+
+" Autosave only when there is something to save. Always saving makes build
+" watchers crazy
+function! SaveIfUnsaved()
+    if &modified
+        :silent! w
+    endif
+endfunction
+au FocusLost,BufLeave * :call SaveIfUnsaved()
+" Read the file on focus/buffer enter
+au FocusGained,BufEnter * :silent! !
 
 " Save cursor position
 autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif 
@@ -66,9 +80,8 @@ set foldmethod=manual
 " Tabs and spacing
 set autoindent
 set cindent
-set tabstop=2
-set noexpandtab
-set shiftwidth=2
+set tabstop=4
+set shiftwidth=4
 set smarttab
 
 " Search and replace
@@ -88,19 +101,13 @@ nmap <Leader>b :Buffers<CR>
 nmap <Leader>h :History<CR>
 " Augmenting Ag command using fzf#vim#with_preview function
 command! -bang -nargs=* Ag
-  \ call fzf#vim#ag(<q-args>, '--hidden --ignore .git',
+  \ call fzf#vim#ag(<q-args>, '--hidden --ignore .git -f',
   \                 <bang>0 ? fzf#vim#with_preview('up:60%')
   \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
   \                 <bang>0)
 
 " Raw ag to passing arguments
 command! -bang -nargs=+ -complete=dir Rag call fzf#vim#ag_raw(<q-args>, fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}), <bang>0)
-
-" Auto save
-"reload when entering the buffer or gaining focus
-au FocusGained,BufEnter * :silent! !
-"save when exiting the buffer or losing focus
-au FocusLost,WinLeave,BufLeave * :silent! w
 
 " zoom a vim pane, <C-w>= to re-balance
 nnoremap <leader>- :wincmd _<cr>:wincmd \|<cr>
@@ -265,6 +272,7 @@ nnoremap <Leader>s :<C-u>call gitblame#echo()<CR>
 " Large file support
 autocmd BufWinEnter * if line2byte(line("$") + 1) > 1000000 | syntax clear | endif
 
+<<<<<<< HEAD
 " Debugging config
 let g:vdebug_options= {
 \    "port" : 9000,
@@ -283,3 +291,12 @@ let g:vdebug_options= {
 \    "marker_closed_tree" : '▸',
 \    "marker_open_tree" : '▾'
 \}
+=======
+if &diff
+	autocmd FileType * let b:coc_enabled = 0
+endif
+
+let g:vdebug_options = {'break_on_open': 0}
+
+let g:gitgutter_max_signs = 500
+>>>>>>> 4adeb193d77060666803452f9010637a83c5620d
