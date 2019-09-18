@@ -1,7 +1,6 @@
 " Vim Plug
 call plug#begin('~/.local/share/nvim/plugged')
 " Editor
-Plug 'scrooloose/nerdtree'
 Plug 'itchyny/lightline.vim'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-shell'
@@ -9,8 +8,6 @@ Plug 'editorconfig/editorconfig-vim'
 " Git integration
 Plug 'airblade/vim-gitgutter'
 Plug 'zivyangll/git-blame.vim'
-" Linting
-Plug 'w0rp/ale', { 'on':  'ALEToggle' } 
 " Alignment
 Plug 'junegunn/vim-easy-align'
 " Completion
@@ -21,10 +18,12 @@ Plug 'sheerun/vim-polyglot'
 " Comment
 Plug 'scrooloose/nerdcommenter'
 " Search
-Plug 'junegunn/fzf'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 " Themes
 Plug 'dinhtungdu/ayu-vim'
+" Debug
+Plug 'vim-vdebug/vdebug'
 " Initialize plugin system
 call plug#end()
 
@@ -122,16 +121,9 @@ nnoremap <silent> <Left> :vertical resize -3<cr>
 nnoremap <silent> <UP> :resize +3<cr>
 nnoremap <silent> <Down> :resize -3<cr>
 
-" NERDTree
-map <CR> :NERDTreeFind<CR>
-let NERDTreeQuitOnOpen=1
-
 " Alignment
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
-
-" Linting
-let g:ale_php_phpcs_standard = "WordPress"
 
 " " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
@@ -171,13 +163,10 @@ set nowritebackup
 
 " Better display for messages
 set cmdheight=2
-set shortmess=aFc
+"set shortmess=aFc
 
 " Smaller updatetime for CursorHold & CursorHoldI
 set updatetime=300
-
-" don't give |ins-completion-menu| messages.
-set shortmess+=c
 
 " always show signcolumns
 set signcolumn=yes
@@ -274,3 +263,11 @@ if &diff
 endif
 
 let g:gitgutter_max_signs = 500
+
+nmap <Leader>e :w<CR>:Exp<CR>
+let g:netrw_silent = 1
+
+" Debugging config
+let g:vdebug_options= {
+\    "break_on_open" : 0,
+\}
