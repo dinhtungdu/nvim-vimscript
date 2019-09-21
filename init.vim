@@ -97,7 +97,7 @@ nmap <Leader>b :Buffers<CR>
 nmap <Leader>h :History<CR>
 " Augmenting Ag command using fzf#vim#with_preview function
 command! -bang -nargs=* Ag
-  \ call fzf#vim#ag(<q-args>, '--hidden --ignore .git -f',
+  \ call fzf#vim#ag(<q-args>, '--skip-vcs-ignores --path-to-ignore ~/.ignore -f',
   \                 <bang>0 ? fzf#vim#with_preview('up:60%')
   \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
   \                 <bang>0)
