@@ -14,38 +14,54 @@ Plug 'junegunn/vim-easy-align'
 Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 " Syntax
 Plug 'sheerun/vim-polyglot'
-"Plug 'Raimondi/delimitMate'
 " Comment
 Plug 'scrooloose/nerdcommenter'
 " Search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 " Themes
-Plug 'dinhtungdu/ayu-vim'
+Plug 'ayu-theme/ayu-vim'
+Plug 'NLKNguyen/papercolor-theme'
 " Debug
 Plug 'vim-vdebug/vdebug'
 " Initialize plugin system
 call plug#end()
 
 " General
+set t_Co=256
+set termguicolors
+set background=light
+"let ayucolor="light"
+"colorscheme ayu
+colorscheme PaperColor
+let g:PaperColor_Theme_Options = {
+  \   'theme': {
+  \     'default.light': {
+  \       'override' : {
+  \         'cursorcolumn' : ['#dddddd', ''],
+  \         'color00' : ['#e1e1e1', ''],
+  \         'cursor_fg' : ['#e1e1e1', ''],
+  \         'cursorlinenr_bg' : ['#e1e1e1', ''],
+  \         'linenumber_bg' : ['#e1e1e1', ''],
+  \         'vertsplit_bg' : ['#e1e1e1', ''],
+  \         'todo_bg' : ['#e1e1e1', ''],
+  \         'visual_fg' : ['#e1e1e1', ''],
+  \         'tabline_inactive_fg': ['#e1e1e1', ''],
+  \         'buftabline_active_fg':   ['#e1e1e1', ''],
+  \         'buftabline_inactive_fg': ['#e1e1e1', '']
+  \       }
+  \     }
+  \   }
+  \ }
+
 let mapleader=","
 syntax enable
-" set t_Co=256
-set termguicolors
-let ayucolor="dark"
-colorscheme ayu
-set nu
-filetype plugin indent on
-set nocp
 set ruler
-set wildmenu
-set mouse-=a
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+set nu
 set relativenumber
 nmap <Leader>t :tabNext<CR>
-set guicursor=
-highlight ColorColumn ctermbg=gray
-set colorcolumn=81
+set colorcolumn=80
 
 " Autosave only when there is something to save. Always saving makes build
 " watchers crazy
@@ -104,6 +120,22 @@ command! -bang -nargs=* Ag
 
 " Raw ag to passing arguments
 command! -bang -nargs=+ -complete=dir Rag call fzf#vim#ag_raw(<q-args>, fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}), <bang>0)
+
+" Customize fzf colors to match your color scheme
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
 
 " zoom a vim pane, <C-w>= to re-balance
 nnoremap <leader>- :wincmd _<cr>:wincmd \|<cr>
@@ -235,12 +267,12 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
 " Lightline config
 let g:lightline = {
+      \ 'colorscheme': 'PaperColor',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'currentfunction', 'readonly', 'filename', 'modified' ] ]
       \ },
       \ 'component_function': {
-      \   'gitbranch': 'fugitive#head',
       \   'currentfunction': 'CocCurrentFunction'
       \ },
       \ }
