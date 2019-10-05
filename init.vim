@@ -5,6 +5,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-shell'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'Yggdroot/indentLine'
 " Git integration
 Plug 'airblade/vim-gitgutter'
 Plug 'zivyangll/git-blame.vim'
@@ -28,38 +29,12 @@ Plug 'vim-vdebug/vdebug'
 call plug#end()
 
 " General
-set t_Co=256
-set termguicolors
-set background=light
-"let ayucolor="light"
-"colorscheme ayu
-colorscheme PaperColor
-let g:PaperColor_Theme_Options = {
-  \   'theme': {
-  \     'default.light': {
-  \       'override' : {
-  \         'cursorcolumn' : ['#dddddd', ''],
-  \         'color00' : ['#e1e1e1', ''],
-  \         'cursor_fg' : ['#e1e1e1', ''],
-  \         'cursorlinenr_bg' : ['#e1e1e1', ''],
-  \         'linenumber_bg' : ['#e1e1e1', ''],
-  \         'vertsplit_bg' : ['#e1e1e1', ''],
-  \         'todo_bg' : ['#e1e1e1', ''],
-  \         'visual_fg' : ['#e1e1e1', ''],
-  \         'tabline_inactive_fg': ['#e1e1e1', ''],
-  \         'buftabline_active_fg':   ['#e1e1e1', ''],
-  \         'buftabline_inactive_fg': ['#e1e1e1', '']
-  \       }
-  \     }
-  \   }
-  \ }
-
 let mapleader=","
 syntax enable
 set ruler
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
-set nu
 set relativenumber
+set nu
 nmap <Leader>t :tabNext<CR>
 set colorcolumn=80
 
@@ -195,15 +170,15 @@ set nowritebackup
 
 " Better display for messages
 set cmdheight=2
-"set shortmess=aFc
 
-" Smaller updatetime for CursorHold & CursorHoldI
+" You will have bad experience for diagnostic messages when it's default 4000.
 set updatetime=300
+
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
 
 " always show signcolumns
 set signcolumn=yes
-
-set completeopt+=preview
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
@@ -245,6 +220,9 @@ endfunction
 " Highlight symbol under cursor on CursorHold
 "autocmd CursorHold * silent call CocActionAsync('highlight')
 
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
 augroup mygroup
   autocmd!
   " Setup formatexpr specified filetype(s).
@@ -267,7 +245,6 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
 " Lightline config
 let g:lightline = {
-      \ 'colorscheme': 'PaperColor',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'currentfunction', 'readonly', 'filename', 'modified' ] ]
@@ -303,3 +280,21 @@ let g:netrw_silent = 1
 let g:vdebug_options= {
 \    "break_on_open" : 0,
 \}
+
+" IndentLine
+let g:indentLine_showFirstIndentLevel = 1
+let g:indentLine_setColors = 0
+let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+
+" Themes
+set t_Co=256
+set termguicolors
+
+set background=dark
+colorscheme PaperColor
+let g:lightline.colorscheme = 'PaperColor'
+
+"let ayucolor="mirage" " for mirage version of theme
+"let ayucolor="dark"   " for dark version of theme
+"let ayucolor="light"  " for light version of theme
+"colorscheme ayu
