@@ -5,7 +5,6 @@ Plug 'itchyny/lightline.vim'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-shell'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'Yggdroot/indentLine'
 " Git integration
 Plug 'airblade/vim-gitgutter'
 Plug 'zivyangll/git-blame.vim'
@@ -23,8 +22,6 @@ Plug 'junegunn/fzf.vim'
 " Themes
 Plug 'ayu-theme/ayu-vim'
 Plug 'NLKNguyen/papercolor-theme'
-" Debug
-Plug 'vim-vdebug/vdebug'
 " Initialize plugin system
 call plug#end()
 
@@ -35,7 +32,7 @@ set ruler
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set relativenumber
 set nu
-nmap <Leader>t :tabNext<CR>
+nmap <Leader>t :tabnext<CR>
 set colorcolumn=80
 
 " Autosave only when there is something to save. Always saving makes build
@@ -241,6 +238,9 @@ command! -nargs=0 Format :call CocAction('format')
 " Use `:Fold` to fold current buffer
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
+" Refresh completion and fix underline issue
+nmap <leader>r :call nvim_buf_clear_namespace(bufnr('%'), -1, 0, -1)<CR>:w<CR>:e<CR>
+
 " Coc config ends ==================
 
 " Lightline config
@@ -262,7 +262,7 @@ set path+=$PWD/node_modules
 vnoremap <Leader>g y<Esc>:Open http://google.com/search?q=<C-r>"<CR>
 
 " Echo Git blame information
-nnoremap <Leader>s :<C-u>call gitblame#echo()<CR>
+nnoremap <Leader>gb :<C-u>call gitblame#echo()<CR>
 
 " Large file support
 autocmd BufWinEnter * if line2byte(line("$") + 1) > 1000000 | syntax clear | endif
@@ -276,25 +276,9 @@ let g:gitgutter_max_signs = 500
 nmap <Leader>e :w<CR>:Exp<CR>
 let g:netrw_silent = 1
 
-" Debugging config
-let g:vdebug_options= {
-\    "break_on_open" : 0,
-\}
-
-" IndentLine
-let g:indentLine_showFirstIndentLevel = 1
-let g:indentLine_setColors = 0
-let g:indentLine_char_list = ['|', '¦', '┆', '┊']
-
 " Themes
+let g:lightline.colorscheme = 'PaperColor'
 set t_Co=256
 set termguicolors
 
-set background=dark
 colorscheme PaperColor
-let g:lightline.colorscheme = 'PaperColor'
-
-"let ayucolor="mirage" " for mirage version of theme
-"let ayucolor="dark"   " for dark version of theme
-"let ayucolor="light"  " for light version of theme
-"colorscheme ayu
