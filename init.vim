@@ -85,18 +85,9 @@ vnoremap // y/<C-R>"<CR>
 vnoremap <F3> y/<C-r>"<CR>
 vnoremap <F4> y:%s/<C-r>"//g<Left><Left>
 nmap <Leader>f :Files<CR>
-nmap <Leader>F :GFiles<CR>
+nmap <Leader>F :Rg<CR>
 nmap <Leader>b :Buffers<CR>
 nmap <Leader>h :History<CR>
-" Augmenting Ag command using fzf#vim#with_preview function
-command! -bang -nargs=* Ag
-  \ call fzf#vim#ag(<q-args>, '--skip-vcs-ignores --path-to-ignore ~/.ignore -f',
-  \                 <bang>0 ? fzf#vim#with_preview('up:60%')
-  \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \                 <bang>0)
-
-" Raw ag to passing arguments
-command! -bang -nargs=+ -complete=dir Rag call fzf#vim#ag_raw(<q-args>, fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}), <bang>0)
 
 " Customize fzf colors to match your color scheme
 let g:fzf_colors =
