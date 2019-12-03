@@ -1,4 +1,9 @@
 " Vim Plug
+if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+    silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 call plug#begin('~/.local/share/nvim/plugged')
 " Editor
 Plug 'itchyny/lightline.vim'
@@ -20,7 +25,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 " Themes
-Plug 'NLKNguyen/papercolor-theme'
+Plug 'ayu-theme/ayu-vim'
 " Initialize plugin system
 call plug#end()
 
@@ -277,9 +282,9 @@ nmap <Leader>e :w<CR>:Exp<CR>
 let g:netrw_silent = 1
 
 " Themes
-let g:lightline.colorscheme = 'PaperColor'
-set background=light
-set t_Co=256
-set termguicolors
+set termguicolors     " enable true colors support
+let ayucolor="light"  " for light version of theme
+let ayucolor="mirage" " for mirage version of theme
+let ayucolor="dark"   " for dark version of theme
+colorscheme ayu
 
-colorscheme PaperColor
