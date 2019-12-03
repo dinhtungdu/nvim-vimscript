@@ -11,7 +11,7 @@ Plug 'zivyangll/git-blame.vim'
 " Alignment
 Plug 'junegunn/vim-easy-align'
 " Completion
-Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Syntax
 Plug 'sheerun/vim-polyglot'
 " Comment
@@ -20,7 +20,6 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 " Themes
-Plug 'ayu-theme/ayu-vim'
 Plug 'NLKNguyen/papercolor-theme'
 " Initialize plugin system
 call plug#end()
@@ -64,8 +63,9 @@ set foldmethod=manual
 " Tabs and spacing
 set autoindent
 set cindent
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
+set expandtab
 set smarttab
 
 " Search and replace
@@ -278,6 +278,7 @@ let g:netrw_silent = 1
 
 " Themes
 let g:lightline.colorscheme = 'PaperColor'
+set background=light
 set t_Co=256
 set termguicolors
 
