@@ -85,11 +85,22 @@ vnoremap // y/<C-R>"<CR>
 vnoremap <F3> y/<C-r>"<CR>
 vnoremap <F4> y:%s/<C-r>"//g<Left><Left>
 nmap <Leader>f :Files<CR>
-nmap <Leader>F :Rg<CR>
+nmap <Leader>g :Rg<CR>
 nmap <Leader>b :Buffers<CR>
 nmap <Leader>h :History<CR>
 
-" Customize fzf colors to match your color scheme
+function! RipgrepFzf(query, fullscreen)
+  let command_fmt = 'rg --no-ignore-vcs --hidden --ignore-file ~/.config/nvim/ignore --column --line-number --no-heading --color=always --smart-case %s || true'
+  let initial_command = printf(command_fmt, shellescape(a:query))
+  let reload_command = printf(command_fmt, '{q}')
+  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+  "call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+  call fzf#vim#grep(initial_command, 1, spec, a:fullscreen)
+endfunction
+
+command! -nargs=* -bang Rg call RipgrepFzf(<q-args>, <bang>0)
+
+ "Customize fzf colors to match your color scheme
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
   \ 'bg':      ['bg', 'Normal'],
@@ -255,7 +266,7 @@ set suffixesadd+=.js " Import js file without extension.
 set path+=$PWD/node_modules
 
 " Do a google search
-vnoremap <Leader>g y<Esc>:Open http://google.com/search?q=<C-r>"<CR>
+vnoremap <Leader>G y<Esc>:Open http://google.com/search?q=<C-r>"<CR>
 
 " Echo Git blame information
 nnoremap <Leader>gb :<C-u>call gitblame#echo()<CR>
