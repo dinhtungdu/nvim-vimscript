@@ -85,15 +85,16 @@ vnoremap // y/<C-R>"<CR>
 vnoremap <F3> y/<C-r>"<CR>
 vnoremap <F4> y:%s/<C-r>"//g<Left><Left>
 nmap <Leader>f :Files<CR>
-nmap <Leader>g :Rg<CR>
+nmap <Leader>g :Rg 
 nmap <Leader>b :Buffers<CR>
 nmap <Leader>h :History<CR>
 
 function! RipgrepFzf(query, fullscreen)
   let command_fmt = 'rg --no-ignore-vcs --hidden --ignore-file ~/.config/nvim/ignore --column --line-number --no-heading --color=always --smart-case %s || true'
   let initial_command = printf(command_fmt, shellescape(a:query))
-  let reload_command = printf(command_fmt, '{q}')
-  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+  "let reload_command = printf(command_fmt, '{q}')
+  "let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+  let spec = {'options': ['--query', a:query]}
   "call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
   call fzf#vim#grep(initial_command, 1, spec, a:fullscreen)
 endfunction
