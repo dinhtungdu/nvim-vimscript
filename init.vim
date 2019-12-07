@@ -12,7 +12,8 @@ Plug 'xolox/vim-shell'
 Plug 'editorconfig/editorconfig-vim'
 " Git integration
 Plug 'airblade/vim-gitgutter'
-Plug 'zivyangll/git-blame.vim'
+Plug 'rhysd/git-messenger.vim'
+Plug 'tpope/vim-fugitive'
 " Alignment
 Plug 'junegunn/vim-easy-align'
 " Completion
@@ -268,9 +269,6 @@ set path+=$PWD/node_modules
 
 " Do a google search
 vnoremap <Leader>G y<Esc>:Open http://google.com/search?q=<C-r>"<CR>
-
-" Echo Git blame information
-nnoremap <Leader>gb :<C-u>call gitblame#echo()<CR>
 
 " Large file support
 autocmd BufWinEnter * if line2byte(line("$") + 1) > 1000000 | syntax clear | endif
