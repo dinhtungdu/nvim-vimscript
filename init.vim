@@ -11,9 +11,8 @@ Plug 'xolox/vim-misc'
 Plug 'xolox/vim-shell'
 Plug 'editorconfig/editorconfig-vim'
 " Git integration
-Plug 'airblade/vim-gitgutter'
 Plug 'rhysd/git-messenger.vim'
-Plug 'tpope/vim-fugitive'
+Plug 'itchyny/vim-gitbranch'
 " Alignment
 Plug 'junegunn/vim-easy-align'
 " Completion
@@ -297,10 +296,6 @@ augroup mygroup
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
 
-function! CocCurrentFunction()
-    return get(b:, 'coc_current_function', '')
-endfunction
-
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
 
@@ -308,17 +303,22 @@ command! -nargs=0 Format :call CocAction('format')
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
 " Refresh completion and fix underline issue
-nmap <leader>r :call nvim_buf_clear_namespace(bufnr('%'), -1, 0, -1)<CR>:w<CR>:e<CR>
+nmap <leader>r :call nvim_buf_clear_namespace(bufnr('%'), -1, 0, -1)<CR>:w<CR>:e<CR>:e<CR>
 
 " Coc config ends ==================
 
 " Lightline config
+function! CocCurrentFunction()
+    return get(b:, 'coc_current_function', '')
+endfunction
 let g:lightline = {
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'currentfunction', 'readonly', 'filename', 'modified' ] ]
+      \             [ 'cocstatus', 'gitbranch', 'currentfunction', 'readonly', 'filename', 'modified' ] ]
       \ },
       \ 'component_function': {
+      \   'cocstatus': 'coc#status',
+      \   'gitbranch': 'gitbranch#name',
       \   'currentfunction': 'CocCurrentFunction'
       \ },
       \ }
@@ -337,13 +337,11 @@ if &diff
 	autocmd FileType * let b:coc_enabled = 0
 endif
 
-let g:gitgutter_max_signs = 500
-
 nmap <Leader>e :w<CR>:Exp<CR>
 let g:netrw_silent = 1
 
 " Themes
 set termguicolors     " enable true colors support
-let g:lightline = { 'colorscheme': 'PaperColor' }
+let g:lightline.colorscheme = 'PaperColor'
 set background=light
 colorscheme PaperColor
