@@ -12,7 +12,6 @@ Plug 'xolox/vim-shell'
 Plug 'editorconfig/editorconfig-vim'
 " Git integration
 Plug 'rhysd/git-messenger.vim'
-Plug 'itchyny/vim-gitbranch'
 " Alignment
 Plug 'junegunn/vim-easy-align'
 " Completion
@@ -225,6 +224,7 @@ let g:easy_align_delimiters = {
 \ }
 
 " Coc config starts ================
+let g:coc_global_extensions = ['coc-git', 'coc-highlight', 'coc-tsserver', 'coc-phpls', 'coc-json', 'coc-html', 'coc-css']
 
 " if hidden is not set, TextEdit might fail.
 set hidden
@@ -308,17 +308,31 @@ nmap <leader>r :call nvim_buf_clear_namespace(bufnr('%'), -1, 0, -1)<CR>:w<CR>:e
 " Coc config ends ==================
 
 " Lightline config
+function! CocGitBlame() abort
+  let blame = get(b:, 'coc_git_blame', '')
+  " return blame
+  return winwidth(0) > 120 ? blame : ''
+endfunction
 function! CocCurrentFunction()
-    return get(b:, 'coc_current_function', '')
+  return get(b:, 'coc_current_function', '')
+endfunction
+function! CocGitStatus()
+  return get(g:, 'coc_git_status', '')
 endfunction
 let g:lightline = {
       \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'cocstatus', 'gitbranch', 'currentfunction', 'readonly', 'filename', 'modified' ] ]
+      \   'left': [
+      \     [ 'mode', 'paste' ],
+      \     [ 'gitstatus', 'currentfunction', 'readonly', 'filename', 'modified' ]
+      \   ],
+      \   'right':[
+      \     [ 'filetype', 'fileencoding', 'lineinfo', 'percent' ],
+      \     [ 'blame' ]
+      \   ],
       \ },
       \ 'component_function': {
-      \   'cocstatus': 'coc#status',
-      \   'gitbranch': 'gitbranch#name',
+      \   'blame': 'CocGitBlame',
+      \   'gitstatus': 'CocGitStatus',
       \   'currentfunction': 'CocCurrentFunction'
       \ },
       \ }
