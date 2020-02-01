@@ -10,6 +10,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-shell'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'Yggdroot/indentLine'
 " Git integration
 Plug 'rhysd/git-messenger.vim'
 " Alignment
@@ -25,6 +26,9 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 " Themes
 Plug 'NLKNguyen/papercolor-theme'
+Plug 'kaicataldo/material.vim'
+" Debug
+Plug 'vim-vdebug/vdebug'
 " Initialize plugin system
 call plug#end()
 
@@ -38,7 +42,10 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set relativenumber
 set nu
 nmap <Leader>t :tabnext<CR>
-set colorcolumn=80
+highlight ColorColumn ctermbg=magenta "set to whatever you like
+call matchadd('ColorColumn', '\%81v', 100) "set column nr
+set exrc
+set secure
 
 " Autosave only when there is something to save. Always saving makes build
 " watchers crazy
@@ -354,8 +361,17 @@ endif
 nmap <Leader>e :w<CR>:Exp<CR>
 let g:netrw_silent = 1
 
+let g:vdebug_options = {
+\    "break_on_open" : 0,
+\}
+
 " Themes
-set termguicolors     " enable true colors support
+set termguicolors " enable true colors support
+
 let g:lightline.colorscheme = 'PaperColor'
 set background=light
 colorscheme PaperColor
+
+"let g:lightline.colorscheme = 'material_vim'
+"let g:material_theme_style = 'ocean'
+"colorscheme material
