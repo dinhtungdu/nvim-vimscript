@@ -26,7 +26,6 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 " Themes
 Plug 'NLKNguyen/papercolor-theme'
-Plug 'kaicataldo/material.vim'
 " Debug
 Plug 'vim-vdebug/vdebug'
 " Initialize plugin system
@@ -46,6 +45,8 @@ highlight ColorColumn ctermbg=magenta "set to whatever you like
 call matchadd('ColorColumn', '\%81v', 100) "set column nr
 set exrc
 set secure
+set fileformats=unix,dos
+let g:vim_markdown_conceal = 0
 
 " Autosave only when there is something to save. Always saving makes build
 " watchers crazy
@@ -326,6 +327,10 @@ endfunction
 function! CocGitStatus()
   return get(g:, 'coc_git_status', '')
 endfunction
+function! LineEnding()
+  let s:newline_labels = {'unix': 'LF', 'mac': 'CR', 'dos': 'CRLF'}
+  return get(s:newline_labels, &fileformat, &fileformat)
+endfunction
 let g:lightline = {
       \ 'active': {
       \   'left': [
@@ -333,14 +338,15 @@ let g:lightline = {
       \     [ 'gitstatus', 'currentfunction', 'readonly', 'filename', 'modified' ]
       \   ],
       \   'right':[
-      \     [ 'filetype', 'fileencoding', 'lineinfo', 'percent' ],
+      \     [ 'filetype', 'fileencoding', 'lineending', 'lineinfo', 'percent' ],
       \     [ 'blame' ]
       \   ],
       \ },
       \ 'component_function': {
       \   'blame': 'CocGitBlame',
       \   'gitstatus': 'CocGitStatus',
-      \   'currentfunction': 'CocCurrentFunction'
+      \   'currentfunction': 'CocCurrentFunction',
+      \   'lineending': 'LineEnding'
       \ },
       \ }
 
@@ -358,7 +364,7 @@ if &diff
 	autocmd FileType * let b:coc_enabled = 0
 endif
 
-nmap <Leader>e :w<CR>:Exp<CR>
+nmap <CR> :w<CR>:Exp<CR>
 let g:netrw_silent = 1
 
 let g:vdebug_options = {
@@ -371,7 +377,3 @@ set termguicolors " enable true colors support
 let g:lightline.colorscheme = 'PaperColor'
 set background=light
 colorscheme PaperColor
-
-"let g:lightline.colorscheme = 'material_vim'
-"let g:material_theme_style = 'ocean'
-"colorscheme material
