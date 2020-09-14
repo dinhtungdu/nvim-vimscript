@@ -1,5 +1,6 @@
 {
   "coc.preferences.currentFunctionSymbolAutoUpdate": true,
   "git.enableGutters": true,
-  "git.branchCharacter": "⎇"
+  "git.branchCharacter": "⎇",
+  "intelephense.diagnostics.run": "onSave"
 }

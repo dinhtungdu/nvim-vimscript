@@ -16,7 +16,7 @@ Plug 'rhysd/git-messenger.vim'
 " Alignment
 Plug 'junegunn/vim-easy-align'
 " Completion
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 " Syntax
 Plug 'sheerun/vim-polyglot'
 " Comment
@@ -242,7 +242,7 @@ set nobackup
 set nowritebackup
 
 " Better display for messages
-set cmdheight=2
+set cmdheight=1
 
 " You will have bad experience for diagnostic messages when it's default 4000.
 set updatetime=300
@@ -375,5 +375,5 @@ let g:vdebug_options = {
 set termguicolors " enable true colors support
 
 let g:lightline.colorscheme = 'PaperColor'
-set background=light
+set background=dark
 colorscheme PaperColor
