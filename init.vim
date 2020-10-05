@@ -5,28 +5,16 @@ if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 call plug#begin('~/.local/share/nvim/plugged')
-" Editor
 Plug 'itchyny/lightline.vim'
-Plug 'xolox/vim-misc'
-Plug 'xolox/vim-shell'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'Yggdroot/indentLine'
-" Git integration
 Plug 'rhysd/git-messenger.vim'
-" Alignment
 Plug 'junegunn/vim-easy-align'
-" Completion
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
-" Syntax
 Plug 'sheerun/vim-polyglot'
-" Comment
 Plug 'scrooloose/nerdcommenter'
-" Search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-" Themes
 Plug 'NLKNguyen/papercolor-theme'
-" Debug
 Plug 'vim-vdebug/vdebug'
 " Initialize plugin system
 call plug#end()
@@ -96,13 +84,12 @@ vnoremap <F4> y:%s/<C-r>"//g<Left><Left>
 
 " FZF
 nmap <Leader>f :Files<CR>
-nmap <Leader>g :Rg 
 nmap <Leader>b :Buffers<CR>
 nmap <Leader>h :History<CR>
 
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
-  \   'rg --hidden --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+  \   'rg -L --hidden --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
   \   <bang>0 ? fzf#vim#with_preview()
   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
   \   <bang>0)
@@ -232,7 +219,7 @@ let g:easy_align_delimiters = {
 \ }
 
 " Coc config starts ================
-let g:coc_global_extensions = ['coc-git', 'coc-highlight', 'coc-tsserver', 'coc-phpls', 'coc-json', 'coc-html', 'coc-css']
+let g:coc_global_extensions = ['coc-git', 'coc-highlight', 'coc-tsserver', 'coc-phpls', 'coc-json', 'coc-html', 'coc-css', 'coc-tailwindcss', 'coc-svg']
 
 " if hidden is not set, TextEdit might fail.
 set hidden
@@ -355,10 +342,18 @@ set suffixesadd+=.js " Import js file without extension.
 set path+=$PWD/node_modules
 
 " Do a google search
-vnoremap <Leader>G y<Esc>:Open http://google.com/search?q=<C-r>"<CR>
+vnoremap <Leader>g y<Esc>:!open "https://google.com/search?q=<C-r>""<CR>
+nmap <Leader>g byw<Esc>:!open "https://google.com/search?q=<C-r>""<CR>
 
 " Large file support
 autocmd BufWinEnter * if line2byte(line("$") + 1) > 1000000 | syntax clear | endif
+
+" Disable syntax highlight for log files
+autocmd! bufreadpost *.log set syntax=off
+
+" Try to fix really really really long line problem
+set ttyfast " u got a fast terminal
+set lazyredraw " to avoid scrolling problems
 
 if &diff
 	autocmd FileType * let b:coc_enabled = 0
