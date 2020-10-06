@@ -29,8 +29,8 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set relativenumber
 set nu
 nmap <Leader>t :tabnext<CR>
-highlight ColorColumn ctermbg=magenta "set to whatever you like
-call matchadd('ColorColumn', '\%81v', 100) "set column nr
+"highlight ColorColumn ctermbg=magenta "set to whatever you like
+"call matchadd('ColorColumn', '\%81v', 100) "set column nr
 set exrc
 set secure
 set fileformats=unix,dos
@@ -111,7 +111,7 @@ endif
 " All files
 command! -nargs=? -complete=dir AF
   \ call fzf#run(fzf#wrap(fzf#vim#with_preview({
-  \   'source': 'fd --type f --hidden --follow --exclude .git --no-ignore . '.expand(<q-args>)
+  \   'source': 'fd --type f --follow . '.expand(<q-args>)
   \ })))
 
 let g:fzf_colors =
