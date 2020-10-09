@@ -15,7 +15,6 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'NLKNguyen/papercolor-theme'
-Plug 'vim-vdebug/vdebug'
 " Initialize plugin system
 call plug#end()
 
@@ -361,10 +360,6 @@ endif
 
 nmap <CR> :w<CR>:Exp<CR>
 let g:netrw_silent = 1
-
-let g:vdebug_options = {
-\    "break_on_open" : 0,
-\}
 
 " Themes
 set termguicolors " enable true colors support
